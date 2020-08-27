@@ -1,6 +1,7 @@
 <?php
 class RangeField extends Field {
-	function __construct($options)  {
+
+	function __construct($options) {
 		$options+= [
 			'numeric' => true,
 			'min_value' => null,
@@ -110,7 +111,7 @@ class RangeField extends Field {
 		}
 		$value = array_intersect_key($value, ['min'=>1, 'max' =>1]) +
 			['min' => null, 'max' => null];
-		$value = array_map( function($v) { return $v==''? null:$v; }, $value);
+		$value = array_map( function($v) { $v = trim($v); return $v==='' ? null: $v; }, $value);
 
 		if( $value['min'] !== null && $value['max'] !== null && $value['min'] > $value['max'] ) {
 			$value['min']=$value['max'];

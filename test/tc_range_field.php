@@ -7,6 +7,9 @@ class TcRangeField extends TcBase {
 		$value = $this->assertValid(array("min" => "10", "max" => "20"));
 		$this->assertArrayEquals(array("min" => 10.0, "max" => 20.0),$value);
 
+		$value = $this->assertValid(array("min" => " 10.01 ", "max" => " 20.02 "));
+		$this->assertArrayEquals(array("min" => 10.01, "max" => 20.02),$value);
+
 		$value = $this->assertValid(array("min" => "+10.1", "max" => "20.2"));
 		$this->assertEquals(array("min" => 10.1, "max" => 20.2),$value);
 
