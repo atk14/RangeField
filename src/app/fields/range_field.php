@@ -2,6 +2,7 @@
 class RangeField extends Field {
 	function __construct($options)  {
 		$options+= [
+			'numeric' => true,
 			'min_value' => null,
 			'max_value' => null,
 			'widget_range' => null,
@@ -17,7 +18,10 @@ class RangeField extends Field {
 			'required_max' => _('Maximum of the range is required'),
 			'out_of_range' => _('Value is out of range of allowed values'),
 			'invalid' => _('Invalid input for range field'),
+			'numeric' => _("This range field accepts only numeric values"),
 		];
+
+		$this->numeric = $options['numeric'];
 
 		$this->range = [
 			'min' => $options['min_value'],
@@ -59,6 +63,12 @@ class RangeField extends Field {
 				return $this->messages['required'];
 			}
 			return false;
+		}
+
+		if($this->numeric) {
+			if(!is_numeric($v)) {
+					return $this->messages['numeric'];
+			}
 		}
 
 		if($this->range['min'] !== null && ($v < $this->range['min'])) {
