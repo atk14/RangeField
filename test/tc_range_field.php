@@ -25,6 +25,6 @@ class TcRangeField extends TcBase {
 
 	function assertArrayEquals($expected,$value){
 		$this->assertEquals($expected,$value);
-		//$this->assertTrue($expected === $value);
+		$this->assertTrue($expected === $value); // same types required
 	}
 }

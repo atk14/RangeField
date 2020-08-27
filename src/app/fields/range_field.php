@@ -70,6 +70,7 @@ class RangeField extends Field {
 			if(!is_numeric($v)) {
 					return $this->messages['numeric'];
 			}
+			$v = (float)$v;
 		}
 
 		if($this->range['min'] !== null && ($v < $this->range['min'])) {
