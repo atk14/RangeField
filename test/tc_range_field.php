@@ -36,7 +36,7 @@ class TcRangeField extends TcBase {
 <div class=\'noui-slider__wrapper\'>
   <div class=\'noui-slider\' data-noui-slider=\'{"start":[1,10000],"range":{"min":1,"max":10000},"step":1,"unbounded":false}\'>
     <div class=\'noui-slider-hide\'>
-    od<input type="number" value="1" name="range1[min]" class="noui-slider-min" id="id_range1" min="1" max="10000" />do<input type="number" value="10000" name="range1[max]" class="noui-slider-max" id="id_range1_max" min="1" max="10000" />
+    from <input type="number" value="1" name="range1[min]" class="noui-slider-min" id="id_range1" min="1" max="10000" /> to <input type="number" value="10000" name="range1[max]" class="noui-slider-max" id="id_range1_max" min="1" max="10000" />
     </div>
   </div>
 </div>',$range1->as_widget());

@@ -52,9 +52,12 @@ class RangeInput extends Widget
 		);
 		$options = forms_array_merge(array('attrs'=> null), $options);
 		$out =
-			_('od') .
+			trim(strip_tags(_('<!-- range --> from'))) .
+			" " .
 			$this->input($name, $value, 'min', $options) .
-			_('do') .
+			" " .
+			trim(strip_tags(_('<!-- range --> to'))) .
+			" " .
 			$this->input($name, $value, 'max', $options);
 
 		$data = $this->params;
