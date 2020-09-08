@@ -12,19 +12,19 @@ class RangeInput extends Widget
 	 * @param array $options
 	 */
 	function __construct($options = array()){
-		$options += [
+		$options += array(
 			'min_value' => null,
 			'max_value' => null,
-			'params' => [],
+			'params' => array(),
 			'step' => 1,
 			'format' => null,			//see javascript NoUISlider.formats
 			'format_arguments' => null,
 			'unbounded' => false   //returns null for the border values
-		];
-		$this->range= [
-			'min' => $options['min_value'] ?:0,
-			'max' => $options['max_value'] ?:1
-		];
+		);
+		$this->range= array(
+			'min' => $options['min_value'] ? : 0,
+			'max' => $options['max_value'] ? : 1
+		);
 		parent::__construct($options);
 		$this->params = $options['params'];
 		$this->unbounded = $options['unbounded'];
@@ -68,7 +68,7 @@ class RangeInput extends Widget
 			$value['max'] = $this->range['max'];
 		}
 
-		$data['start'] = [ $value['min'], $value['max'] ];
+		$data['start'] = array($value['min'], $value['max']);
 		$data['range'] = $this->range;
 		$data['step'] = $this->step;
 		$data['unbounded'] = $this->unbounded;
@@ -95,14 +95,16 @@ class RangeInput extends Widget
 
 	function input($name, $value, $role, $options) {
 
-		$final_attrs = $this->build_attrs([
-			'type' => $this->input_type,
-			'value' => $this->value($value, $role),
-			'name' => "{$name}[$role]",
-			'class' => "noui-slider-$role" ],
+		$final_attrs = $this->build_attrs(
+			array(
+				'type' => $this->input_type,
+				'value' => $this->value($value, $role),
+				'name' => "{$name}[$role]",
+				'class' => "noui-slider-$role"
+			),
 			$options['attrs']
 		);
-		$final_attrs["id"] = $final_attrs["id"].($role == 'min'?'':'_max'); // "id_name" or "id_name_max"
+		$final_attrs["id"] = $final_attrs["id"].($role == 'min' ? '' : '_max'); // "id_name" or "id_name_max"
 
 		if($this->range['min']!==null) {
 			$final_attrs['min'] = $this->range['min'];
