@@ -10,7 +10,7 @@ class RangeField extends Field {
 			'autocorrect' => false,
 			'unbounded' => false,
 			'widget_options' => array(),
-			'required_both_values_at_once' => true,
+			'required_both_values_at_once' => false,
 			'error_messages' => array(),
 		);
 
@@ -115,9 +115,10 @@ class RangeField extends Field {
 			array('min' => null, 'max' => null);
 		$value = array_map( function($v) { $v = trim($v); return $v==='' ? null : $v; }, $value);
 
-		if( $value['min'] !== null && $value['max'] !== null && $value['min'] > $value['max'] ) {
-			$value['min']=$value['max'];
-		}
+		// TODO: should this be here?
+		//if( $value['min'] !== null && $value['max'] !== null && $value['min'] > $value['max'] ) {
+		//	$value['min']=$value['max'];
+		//}
 
 		foreach($value as $k => &$v) {
 			if($e = $this->checkRange($v, $k)) {
@@ -132,6 +133,10 @@ class RangeField extends Field {
 
 		if($this->required_both_values_at_once && is_null($value["max"]) && !is_null($value["min"])){
 			return array($this->messages["required_max"], null);
+		}
+
+		if(!is_null($value["min"]) && !is_null($value["max"]) && $value["min"]>$value["max"]){
+			return array($this->messages["invalid"], null);
 		}
 
 		return array(null, $value);

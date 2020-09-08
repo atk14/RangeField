@@ -22,9 +22,12 @@ class TcRangeField extends TcBase {
 		$value = $this->assertValid(array("min" => "  ", "max" => ""));
 		$this->assertArrayEquals(array("min" => null, "max" => null),$value);
 
-		// required_both_values_at_once
+		// min is higher than max
+		$msg = $this->assertInvalid(array("min" => 10, "max" => 5));
+		$this->assertEquals("Invalid input for range field",$msg);
 
-		$this->field = new RangeField(array("required" => false, "min_value" => 111, "max_value" => 222)); // required_both_values_at_once is true by default
+		// required_both_values_at_once
+		$this->field = new RangeField(array("required" => false, "min_value" => 111, "max_value" => 222, "required_both_values_at_once" => true));
 
 		$msg = $this->assertInvalid(array("min" => "", "max" => "222"));
 		$this->assertEquals("Minimum of the range is required",$msg);
@@ -33,6 +36,14 @@ class TcRangeField extends TcBase {
 		$this->assertEquals("Maximum of the range is required",$msg);
 
 		$this->field = new RangeField(array("required" => false, "min_value" => 111, "max_value" => 222, "required_both_values_at_once" => false));
+
+		$value = $this->assertValid(array("min" => "", "max" => "222"));
+		$this->assertArrayEquals(array("min" => null, "max" => 222.0),$value);
+
+		$value = $this->assertValid(array("min" => "111", "max" => ""));
+		$this->assertArrayEquals(array("min" => 111.0, "max" => null),$value);
+
+		$this->field = new RangeField(array("required" => false, "min_value" => 111, "max_value" => 222)); // default is false
 
 		$value = $this->assertValid(array("min" => "", "max" => "222"));
 		$this->assertArrayEquals(array("min" => null, "max" => 222.0),$value);
