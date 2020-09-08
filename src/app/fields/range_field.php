@@ -9,12 +9,16 @@ class RangeField extends Field {
 			'widget_range' => null,
 			'autocorrect' => false,
 			'unbounded' => false,
-			'error_messages' => array(),
 			'widget_options' => array(),
-			'both_values_required_at_once' => true,
+			'required_both_values_at_once' => true,
+			'error_messages' => array(),
 		);
 
 		$this->autocorrect = $options['autocorrect'];
+		$this->unbounded = $options['unbounded'];
+		$this->numeric = $options['numeric'];
+		$this->required_both_values_at_once = $options["required_both_values_at_once"];
+
 		$options['error_messages'] += array(
 			'required_min' => _('Minimum of the range is required'),
 			'required_max' => _('Maximum of the range is required'),
@@ -22,8 +26,6 @@ class RangeField extends Field {
 			'invalid' => _('Invalid input for range field'),
 			'numeric' => _("This range field accepts only numeric values"),
 		);
-
-		$this->numeric = $options['numeric'];
 
 		$this->range = array(
 			'min' => $options['min_value'],
@@ -38,8 +40,6 @@ class RangeField extends Field {
 				'unbounded' => $options['unbounded'],
 			))
 		);
-
-		$this->unbounded = $options['unbounded'];
 
 		parent::__construct($options);
 	}
@@ -121,10 +121,19 @@ class RangeField extends Field {
 
 		foreach($value as $k => &$v) {
 			if($e = $this->checkRange($v, $k)) {
-				return array_map($e, null);
+				return array($e, null);
 			}
 		}
 		unset($v);
+
+		if($this->required_both_values_at_once && is_null($value["min"]) && !is_null($value["max"])){
+			return array($this->messages["required_min"], null);
+		}
+
+		if($this->required_both_values_at_once && is_null($value["max"]) && !is_null($value["min"])){
+			return array($this->messages["required_max"], null);
+		}
+
 		return array(null, $value);
 	}
 

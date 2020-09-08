@@ -19,8 +19,26 @@ class TcRangeField extends TcBase {
 		$value = $this->assertValid(array());
 		$this->assertArrayEquals(array("min" => null, "max" => null),$value);
 
-		$value = $this->assertValid(array("min" => "", "max" => ""));
+		$value = $this->assertValid(array("min" => "  ", "max" => ""));
 		$this->assertArrayEquals(array("min" => null, "max" => null),$value);
+
+		// required_both_values_at_once
+
+		$this->field = new RangeField(array("required" => false, "min_value" => 111, "max_value" => 222)); // required_both_values_at_once is true by default
+
+		$msg = $this->assertInvalid(array("min" => "", "max" => "222"));
+		$this->assertEquals("Minimum of the range is required",$msg);
+
+		$msg = $this->assertInvalid(array("min" => "111", "max" => ""));
+		$this->assertEquals("Maximum of the range is required",$msg);
+
+		$this->field = new RangeField(array("required" => false, "min_value" => 111, "max_value" => 222, "required_both_values_at_once" => false));
+
+		$value = $this->assertValid(array("min" => "", "max" => "222"));
+		$this->assertArrayEquals(array("min" => null, "max" => 222.0),$value);
+
+		$value = $this->assertValid(array("min" => "111", "max" => ""));
+		$this->assertArrayEquals(array("min" => 111.0, "max" => null),$value);
 	}
 
 	function test_widget(){
