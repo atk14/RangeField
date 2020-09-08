@@ -1,9 +1,45 @@
 RangeField
 ==========
 
-RangeField is a field for entering two numeric values within specified minimum a maximum values.
+RangeField is a field for entering two numeric values within specified minimum and maximum.
 
 In eshops, this is an useful field, for example, for setting the price range for product selection.
+
+Usage
+-----
+
+    <?php
+    // file: app/forms/products/index_form.php
+    class IndexForm extends ApplicatonForm {
+
+      function set_up(){
+        $this->add_field("search", new CharField([
+          "label" => "Search",
+          "required" => false,
+        ]));
+
+        $this->add_field("price", new RangeField([
+          "label" => "Price range",
+          "min_value" => 1,
+          "max_value" => 100000,
+          "required" => false,
+        ]));
+      }
+    }
+
+    <?php
+    // file: app/controllers/products_controller.php
+    class ProductsController extends ApplicationController {
+
+      function index(){
+        $d = $this->form->validate($this->params);
+
+        $min = $d["price"]["min"];
+        $max = $d["price"]["max"];
+
+        // ..
+      }
+    }
 
 Installation
 ------------
