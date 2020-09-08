@@ -4,6 +4,7 @@
 class RangeInput extends Widget
 {
 	var $input_type = 'number';
+	var $disabled = false;
 
 	/**
 	 * Constructor
@@ -44,6 +45,11 @@ class RangeInput extends Widget
 	}
 
 	function render($name, $value, $options=array()) {
+		$value = (array)$value;
+		$value += array(
+			"min" => null,
+			"max" => null,
+		);
 		$options = forms_array_merge(array('attrs'=> null), $options);
 		$out =
 			_('od') .
@@ -72,17 +78,16 @@ class RangeInput extends Widget
 
 		$data = json_encode($data);
 
-		$class_disabled=$this->disabled?' noui-slider--disabled':'';
+		$class_disabled = $this->disabled ? ' noui-slider--disabled' : '';
 
 		return "
-			<div class='noui-slider__wrapper'>
-				<div class='noui-slider$class_disabled' data-noui-slider='$data'>
-					<div class='noui-slider-hide'>
-					$out
-					</div>
-				</div>
-			</div>
-		";
+<div class='noui-slider__wrapper'>
+  <div class='noui-slider$class_disabled' data-noui-slider='$data'>
+    <div class='noui-slider-hide'>
+    $out
+    </div>
+  </div>
+</div>";
 	}
 
 	function input($name, $value, $role, $options) {
