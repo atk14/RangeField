@@ -113,7 +113,7 @@ class RangeField extends Field {
 		}
 		$value = array_intersect_key($value, array('min' => 1, 'max' => 1)) +
 			array('min' => null, 'max' => null);
-		$value = array_map( function($v) { $v = trim($v); return $v==='' ? null : $v; }, $value);
+		$value = array_map( function($v) { $v = trim((string)$v); return $v==='' ? null : $v; }, $value);
 
 		// TODO: should this be here?
 		//if( $value['min'] !== null && $value['max'] !== null && $value['min'] > $value['max'] ) {
