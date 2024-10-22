@@ -3,8 +3,16 @@
  */
 class RangeInput extends Widget
 {
+
 	var $input_type = 'number';
 	var $disabled = false;
+
+	var $range;
+	var $params;
+	var $unbounded;
+	var $step;
+	var $format;
+	var $format_arguments;
 
 	/**
 	 * Constructor
