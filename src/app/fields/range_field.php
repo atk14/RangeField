@@ -1,6 +1,12 @@
 <?php
 class RangeField extends Field {
 
+	var $autocorrect;
+	var $unbounded;
+	var $numeric;
+	var $required_both_values_at_once;
+	var $range;
+
 	function __construct($options) {
 		$options += array(
 			'numeric' => true,
