@@ -3,6 +3,10 @@ Change Log
 
 All notable changes to RangeField will be documented in this file.
 
+## [0.2.2] - 2024-10-22
+
+* b8b079c - Fixes for PHP8.3
+
 ## [0.2.1] - 2023-04-10
 
 * 10340c4 - PHP 8.1 issue
